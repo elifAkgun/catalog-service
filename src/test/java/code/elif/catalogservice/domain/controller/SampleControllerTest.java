@@ -10,7 +10,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 
-@WebMvcTest
+@WebMvcTest(SampleController.class)
 class SampleControllerTest {
 
     public static final String TEXT_PLAIN_CHARSET_UTF_8 = "text/plain;charset=UTF-8";

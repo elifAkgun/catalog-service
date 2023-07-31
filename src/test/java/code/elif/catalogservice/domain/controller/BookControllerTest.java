@@ -27,7 +27,7 @@ import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
 
-@WebMvcTest
+@WebMvcTest(BookController.class)
 class BookControllerTest {
 
     @Autowired
@@ -46,8 +46,8 @@ class BookControllerTest {
         // given- precondition or setup
         given(bookService.getBooks())
                 .willReturn(List.of(
-                        new Book("123", "Asd", "asd", BigDecimal.ONE),
-                        new Book("456", "Qwe", "qwe", BigDecimal.TEN)
+                        new Book("1234567891", "Asd", "asd", BigDecimal.ONE),
+                        new Book("1234567892", "Qwe", "qwe", BigDecimal.TEN)
                 ));
 
         // when - action or the behaviour that we are going test
@@ -58,7 +58,7 @@ class BookControllerTest {
         response.andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].isbn", CoreMatchers.is("123")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.[0].isbn", CoreMatchers.is("1234567891")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.size()", CoreMatchers.is(2)));
 
     }
@@ -67,7 +67,7 @@ class BookControllerTest {
     @Test
     public void givenBook_whenCrateBookCalled_thenReturn200ForSuccessfulOperation() throws Exception {
         // given- precondition or setup
-        Book book = new Book("123", "Asd", "asd", BigDecimal.ONE);
+        Book book = new Book("1234567891", "Asd", "asd", BigDecimal.ONE);
         when(bookService.createBook(book)).thenReturn(book);
 
         // when - action or the behaviour that we are going test
@@ -85,7 +85,7 @@ class BookControllerTest {
     @Test
     public void givenBook_whenCrateBookCalled_thenReturn400ForFailedOperation() throws Exception {
         // given- precondition or setup
-        Book book = new Book("123", "Asd", "asd", BigDecimal.ONE);
+        Book book = new Book("1234567891", "Asd", "asd", BigDecimal.ONE);
         when(bookService.createBook(book)).thenReturn(null);
 
         // when - action or the behaviour that we are going test
@@ -100,28 +100,28 @@ class BookControllerTest {
     @Test
     public void givenBooksListForService_whenGetBooksByISBNCalled_thenReturnExactBooks() throws Exception {
         // given- precondition or setup
-        given(bookService.getBooksByISBN("123"))
-                .willReturn(new Book("123", "Asd", "asd", BigDecimal.ONE));
+        given(bookService.getBooksByISBN("1234567891"))
+                .willReturn(new Book("1234567891", "Asd", "asd", BigDecimal.ONE));
 
         // when - action or the behaviour that we are going test
-        ResultActions response = mockMvc.perform(get("/books/123")
+        ResultActions response = mockMvc.perform(get("/books/1234567891")
                 .contentType(APPLICATION_JSON));
 
         // then - verify the output
         response.andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.isbn", CoreMatchers.is("123")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.isbn", CoreMatchers.is("1234567891")));
     }
 
     @Test
     public void givenBook_whenUpdateBookByISBNCalled_thenReturn200ForSuccessfulOperation() throws Exception {
         // given- precondition or setup
-        Book book = new Book("123", "Asd", "asd", BigDecimal.ONE);
-        when(bookService.updateBookByISBN("123", book)).thenReturn(book);
+        Book book = new Book("1234567891", "Asd", "asd", BigDecimal.ONE);
+        when(bookService.updateBookByISBN("1234567891", book)).thenReturn(book);
 
         // when - action or the behaviour that we are going test
-        ResultActions response = mockMvc.perform(request(HttpMethod.PUT, "/books/123")
+        ResultActions response = mockMvc.perform(request(HttpMethod.PUT, "/books/1234567891")
                 .contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(book))
         );
@@ -135,11 +135,11 @@ class BookControllerTest {
     @Test
     public void givenBook_whenDeleteBookByISBNCalled_thenReturn200ForSuccessfulOperation() throws Exception {
         // given- precondition or setup
-        Book book = new Book("123", "Asd", "asd", BigDecimal.ONE);
-        when(bookService.deleteBookByISBN("123")).thenReturn(true);
+        Book book = new Book("1234567891", "Asd", "asd", BigDecimal.ONE);
+        when(bookService.deleteBookByISBN("1234567891")).thenReturn(true);
 
         // when - action or the behaviour that we are going test
-        ResultActions response = mockMvc.perform(request(HttpMethod.DELETE, "/books/123")
+        ResultActions response = mockMvc.perform(request(HttpMethod.DELETE, "/books/1234567891")
                 .contentType(APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(book))
         );
