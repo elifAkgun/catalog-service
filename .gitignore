@@ -29,3 +29,5 @@ gradle-app.setting
 /dataSources.local.xml
 # Zeppelin ignored files
 /ZeppelinRemoteNotebooks/
+#.idea/
+.idea/*
