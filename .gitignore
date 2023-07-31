@@ -31,3 +31,4 @@ gradle-app.setting
 /ZeppelinRemoteNotebooks/
 #.idea/
 .idea/*
+.DS_Store
